@@ -1,3 +1,8 @@
+import 'package:donut_app/tab/burger_tab.dart';
+import 'package:donut_app/tab/donut_tab.dart';
+import 'package:donut_app/tab/pancake_tab.dart';
+import 'package:donut_app/tab/pizza_tab.dart';
+import 'package:donut_app/tab/smoothie_tab.dart';
 import 'package:donut_app/utils/my_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late TabController _tabController;
   List<Widget> myTabs = [
     //donut tab
     const MyTab(iconPath: 'lib/icons/donut.png', iconName: 'Donut'),
@@ -63,6 +69,19 @@ class _HomePageState extends State<HomePage> {
             ),
             //2. Pestañas (TabBar)
             TabBar(tabs: myTabs),
+
+            Expanded(
+              child: TabBarView(
+                //controller: _tabController,
+                children: [
+                  DonutTab(),
+                  BurguerTab(),
+                  SmoothieTab(),
+                  PancakeTab(),
+                  PizzaTab(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
