@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:donut_app/cart.dart';
 
 class BurgerTile extends StatelessWidget {
   const BurgerTile({
@@ -8,6 +9,7 @@ class BurgerTile extends StatelessWidget {
     required this.burgerColor,
     required this.burgerImagePath,
     required this.burgerProvider,
+    required this.onAdd,
   });
 
   final String burgerFlavor;
@@ -15,6 +17,8 @@ class BurgerTile extends StatelessWidget {
   final dynamic burgerColor;
   final String burgerImagePath;
   final String burgerProvider;
+
+  final VoidCallback onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +59,13 @@ class BurgerTile extends StatelessWidget {
               ],
             ),
 
-            // imagen de la dona
+            // imagen
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               child: Image.asset(burgerImagePath),
             ),
 
-            // nombre del donut
+            // nombre
             Text(
               burgerFlavor,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -81,12 +85,34 @@ class BurgerTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_border, color: Colors.pink[400]),
-                  const Text(
-                    "Add",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+
+                  // Add funcional
+                  GestureDetector(
+                    onTap: () {
+                      Cart().addItem([
+                        burgerFlavor,
+                        burgerPrice,
+                        burgerColor,
+                        burgerImagePath,
+                        burgerProvider,
+                      ]);
+
+                      onAdd(); // si aún lo tienes (puedes quitarlo después)
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("$burgerFlavor added to cart"),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Add",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                 ],

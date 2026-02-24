@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:donut_app/cart.dart';
 
 class PizzaTile extends StatelessWidget {
   const PizzaTile({
@@ -27,7 +28,7 @@ class PizzaTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // etiqueta del precio
+            // Etiqueta del precio
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -55,13 +56,13 @@ class PizzaTile extends StatelessWidget {
               ],
             ),
 
-            // imagen de la dona
+            // Imagen
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               child: Image.asset(pizzaImagePath),
             ),
 
-            // nombre del donut
+            // Nombre
             Text(
               pizzaFlavor,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -69,24 +70,44 @@ class PizzaTile extends StatelessWidget {
 
             const SizedBox(height: 4),
 
-            // proveedor
+            // Proveedor
             Text(pizzaProvider, style: TextStyle(color: Colors.grey[600])),
 
             const SizedBox(height: 8),
 
-            // fila de acciones
+            // Fila de acciones
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_border, color: Colors.pink[400]),
-                  const Text(
-                    "Add",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+
+                  // 🔥 BOTÓN ADD FUNCIONAL
+                  GestureDetector(
+                    onTap: () {
+                      Cart().addItem([
+                        pizzaFlavor,
+                        pizzaPrice,
+                        pizzaColor,
+                        pizzaImagePath,
+                        pizzaProvider,
+                      ]);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("$pizzaFlavor added to cart"),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Add",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                 ],

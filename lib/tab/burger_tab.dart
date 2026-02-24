@@ -1,12 +1,16 @@
 import 'package:donut_app/utils/burger_tile.dart';
 import 'package:flutter/material.dart';
 
-class BurgerTab extends StatelessWidget {
-  BurgerTab({super.key});
+class BurgerTab extends StatefulWidget {
+  const BurgerTab({super.key});
 
-  //List of donuts
+  @override
+  State<BurgerTab> createState() => _BurgerTabState();
+}
+
+class _BurgerTabState extends State<BurgerTab> {
+  // Lista de hamburguesas
   final List burgerOnSale = [
-    // donutFlavor, donutPrice, donutColor, donutImagePath, donutProvider
     [
       'Cheese burger',
       '100',
@@ -40,16 +44,11 @@ class BurgerTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      //Se encarga de acomodar elementos dentro del grid
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //Cantidad de columnas
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        //Tamaño de cada columna
         childAspectRatio: 1 / 1.5,
       ),
-      //Cantidad de elementos
       itemCount: burgerOnSale.length,
-      //Lo que se va a construir
       itemBuilder: (context, index) {
         return BurgerTile(
           burgerFlavor: burgerOnSale[index][0],
@@ -57,6 +56,9 @@ class BurgerTab extends StatelessWidget {
           burgerColor: burgerOnSale[index][2],
           burgerImagePath: burgerOnSale[index][3],
           burgerProvider: burgerOnSale[index][4],
+          onAdd: () {
+            setState(() {}); // 🔥 actualiza en tiempo real
+          },
         );
       },
     );

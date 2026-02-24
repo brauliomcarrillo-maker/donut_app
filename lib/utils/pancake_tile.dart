@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:donut_app/cart.dart';
 
 class PancakeTile extends StatelessWidget {
   const PancakeTile({
@@ -27,7 +28,7 @@ class PancakeTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // etiqueta del precio
+            // Etiqueta del precio
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -55,13 +56,13 @@ class PancakeTile extends StatelessWidget {
               ],
             ),
 
-            // imagen de la dona
+            // Imagen
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               child: Image.asset(pancakeImagePath),
             ),
 
-            // nombre del donut
+            // Nombre
             Text(
               pancakeFlavor,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -69,24 +70,44 @@ class PancakeTile extends StatelessWidget {
 
             const SizedBox(height: 4),
 
-            // proveedor
+            // Proveedor
             Text(pancakeProvider, style: TextStyle(color: Colors.grey[600])),
 
             const SizedBox(height: 8),
 
-            // fila de acciones
+            // Fila de acciones
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_border, color: Colors.pink[400]),
-                  const Text(
-                    "Add",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+
+                  // 🔥 BOTÓN ADD FUNCIONAL
+                  GestureDetector(
+                    onTap: () {
+                      Cart().addItem([
+                        pancakeFlavor,
+                        pancakePrice,
+                        pancakeColor,
+                        pancakeImagePath,
+                        pancakeProvider,
+                      ]);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("$pancakeFlavor added to cart"),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Add",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                 ],

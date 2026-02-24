@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:donut_app/cart.dart';
 
 class DonutTile extends StatelessWidget {
   const DonutTile({
@@ -81,12 +82,30 @@ class DonutTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_border, color: Colors.pink[400]),
-                  const Text(
-                    "Add",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+                  GestureDetector(
+                    onTap: () {
+                      Cart().addItem([
+                        donutFlavor,
+                        donutPrice,
+                        donutColor,
+                        donutImagePath,
+                        donutProvider,
+                      ]);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("$donutFlavor added to cart"),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Add",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                 ],
